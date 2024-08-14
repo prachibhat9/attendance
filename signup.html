@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="login-container">
+        <h2>Signup</h2>
+            <label for="employeeId">Employee ID</label>
+            <input type="text" id="empId" name="empId" required>
+    
+            <label for="password">Create Password</label>
+            <input type="password" id="empPw" name="password" required>
+    
+            <button id="addEmp">Submit</button>
+            <a href="index.html"> back </a>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import{
+          getFirestore, doc, setDoc
+        } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmTo5JmEPJpxcRw3aC_Pl1rZovCMWTQNE",
+            authDomain: "kloctechnologies-4cb20.firebaseapp.com",
+            projectId: "kloctechnologies-4cb20",
+            storageBucket: "kloctechnologies-4cb20.appspot.com",
+            messagingSenderId: "105405929346",
+            appId: "1:105405929346:web:a769d60511135908e1e19b"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+        
+        let empId=document.getElementById("empId");
+        let empPw=document.getElementById("empPw");
+        let addEmp = document.getElementById("addEmp");
+
+       async function AddDocument_CustomID(){
+        const ref = doc(db,"EmpLogin", empId.value);
+        try{
+            await setDoc(ref, {
+                EmployeeID: empId.value,
+                EmployeePassword: empPw.value 
+            });
+            alert("Signup Successful");
+            
+        }
+        catch(error){
+          alert("Couldn't signup:"+ error);  
+        }
+       } 
+
+       addEmp.addEventListener("click", AddDocument_CustomID);
+    </script>
+</body>
+</html>

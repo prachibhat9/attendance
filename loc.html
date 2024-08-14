@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="locationstyle.css"> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body{
+            background-color: #f8f9fa;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 10px;
+        }
+    
+        .card-body {
+            padding: 2rem;
+        }
+    
+        .lead {
+            font-weight: bold;
+        }
+    
+        .text-muted {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <div class="row my-5 align-items-center justify-content-center">
+        <div class="col-5 col-lg-3 col-xl-3 my-2">
+            <div class="card shadow-sm border-0"style="background-color: #eaf4fc;">
+                <div class="card-body text-center py-4">
+                    <h4 class="card-title display-6 mb-2">Employee</h4>
+                    <h5 class="text-secondary"id="employeeIdDisplay"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 col-lg-4 col-xl-5 my-2">
+            <div class="card shadow-sm border-0"style="background-color: #eaf4fc;">
+                <div class="card-body text-center py-4">
+                    <h3 class="card-title mb-3">Your Location</h3>
+                    <p class="locationUser text-muted mb-1"></p>
+                    <p class="address font-weigth-bold mb-1"></p>
+                    <h3 class="text-muted mb-2">Date:</h3>
+                    <h4 id="Date" class="mb-3"></h4>
+                    <h3 class="text-muted mb-2">Time:</h3>
+                    <h4 id="currentTime"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row my-5 align-items-center justify-content-center">
+        <div class="col-5 col-lg-3 col-xl-3 my-2">
+            <div class="card ">
+                <div class="card-body text-center py-3">
+                <h4 class="lead card-title display-6">Employee</h4>
+                <h3 class=" text-muted">Name: </h3>     
+                </div>
+            </div>
+        </div>
+        <div class="col-9 col-lg-4 col-xl-5 my-2">
+            <div class="card">
+                <div class="card-body text-center py-3">
+                    <h3 class=" card-title ">Your Location</h3>
+                    <p class="locationUser"></p>
+                    <p class="address"></p>
+                    <h3 class="text-muted">Date:</h3>
+                    <h4 id="Date"></h4>
+                    <h3 class="text-muted">Time:</h3>
+                    <h4 id="currentTime"></h4>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script> -->
+    <!-- <div class="container my-5">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-5 col-lg-3 my-2">
+                <div class="card">
+                    <div class="card-body text-center py-4">
+                        <h4 class="lead card-title">Employee</h4>
+                        <h3 class="text-muted">Name:</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-5 my-2">
+                <div class="card">
+                    <div class="card-body text-center py-4">
+                        <h3 class="card-title">Your Location</h3>
+                        <p class="locationUser"></p>
+                        <p class="address"></p>
+                        <h3 class="text-muted">Date:</h3>
+                        <h4 id="Date"></h4>
+                        <h3 class="text-muted">Time:</h3>
+                        <h4 id="currentTime"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+            // Function to get query parameters from the URL
+            function getQueryParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            // Retrieve the employee ID from the URL and display it
+            const empId = getQueryParameter('empId');
+            if (empId) {
+                document.getElementById('employeeIdDisplay').textContent = empId;
+            }
+        </script>
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+                import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+                // Your web app's Firebase configuration
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDmTo5JmEPJpxcRw3aC_Pl1rZovCMWTQNE",
+                    authDomain: "kloctechnologies-4cb20.firebaseapp.com",
+                    projectId: "kloctechnologies-4cb20",
+                    storageBucket: "kloctechnologies-4cb20.appspot.com",
+                    messagingSenderId: "105405929346",
+                    appId: "1:105405929346:web:a769d60511135908e1e19b"
+                };
+                 const app = initializeApp(firebaseConfig);
+                    const db = getFirestore(app);
+
+                    // Function to get query parameters from the URL
+                    function getQueryParameter(name) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        return urlParams.get(name);
+                    }
+        
+        const locationUser=document.querySelector(".locationUser");
+        const fullAddress=document.querySelector(".address");
+
+
+let apiEndPoint="https://api.opencagedata.com/geocode/v1/json";
+let apiKey="1873b03ecf544e11b35bc3de173e234f"; 
+
+    const getUserCurrentAddress=async (latitude, longitude)=>{
+       let query=`${latitude},${longitude}`;
+       let apiUrl=`${apiEndPoint}?key=${apiKey}&q=${query}&pretty=1`;
+       try{
+        const res=await fetch(apiUrl);
+        const data=await res.json();
+        console.log(data);
+        fullAddress.textContent=`${data.results[0].formatted}`;
+
+       }catch(error){
+        console.log(error);
+       }
+    };
+
+             if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        const { latitude, longitude }=position.coords;
+                        locationUser.textContent= `latitude ${latitude} longitude ${longitude}`
+                        getUserCurrentAddress(latitude,longitude);
+                    },
+                        (error) => {
+                           
+                            locationUser.textContent=error.message; 
+                            console.log(error.message);
+                        });
+                } 
+            // });
+            function updateTime() {
+                    const currentTimeElement = document.getElementById('currentTime');
+                    const now = new Date();
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const seconds = now.getSeconds().toString().padStart(2, '0');
+                    const timeString = `${hours}:${minutes}:${seconds}`;
+                    currentTimeElement.textContent = timeString;
+                    return timeString;
+                }
+                // setInterval(updateTime, 1000);
+                const currentTime=updateTime();
+
+                document.addEventListener("DOMContentLoaded", function () {
+                        // Get the current date
+                        var currentDate = new Date();
+
+                        // Format the date as needed, e.g., "YYYY-MM-DD"
+                        var formattedDate = currentDate.toLocaleDateString();
+
+                        // Display the date in the HTML element with id="currentDate"
+                        document.getElementById("Date").innerHTML += formattedDate;
+                        saveDataToFirestore(empId, null, null, null, formattedDate, currentTime);
+                    });
+                    async function saveDataToFirestore(empId, latitude, longitude, address, date, time) {
+                            if (!empId) {
+                                console.error("Employee ID is missing");
+                                return;
+                            }
+
+                            const docRef = doc(db, "EmployeeData", empId);
+
+                            try {
+                                await setDoc(docRef, {
+                                    empId: empId,
+                                    latitude: latitude,
+                                    longitude: longitude,
+                                    address: address,
+                                    date: date,
+                                    time: time
+                                });
+                            } catch (error) {
+                                console.error("Error saving data: ", error);
+                            }
+                        }
+        </script>
+        
+</body>
+</html>

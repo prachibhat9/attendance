@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="employeeId">ID</label>
+            <input type="text" id="empId" name="employeeId" required>
+    
+            <label for="password">Password</label>
+            <input type="password" id="empPw" name="password" required>
+    
+            <button type="submit">Submit</button>
+            <div class="links">
+            <a href="" id="">Admin</a>
+            <a href="signup.html">Signup</a>
+        </div>
+        </form>
+    </div>
+    <script type="module">
+        
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmTo5JmEPJpxcRw3aC_Pl1rZovCMWTQNE",
+            authDomain: "kloctechnologies-4cb20.firebaseapp.com",
+            projectId: "kloctechnologies-4cb20",
+            storageBucket: "kloctechnologies-4cb20.appspot.com",
+            messagingSenderId: "105405929346",
+            appId: "1:105405929346:web:a769d60511135908e1e19b"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const empId = document.getElementById('empId').value;
+            const empPw = document.getElementById('empPw').value;
+
+            const ref = doc(db, "EmpLogin", empId);
+            const docSnap = await getDoc(ref);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                if (data.EmployeePassword === empPw) {
+                    // alert('Login Successful');
+                    // window.location.href='loc.html';
+                    window.location.href = `loc.html?empId=${empId}`;
+                    // Redirect or perform other actions on successful login
+                } else {
+                    alert('Incorrect Password');
+                }
+            } else {
+                alert('Employee ID not found');
+            }
+        });
+    </script>
+</body>
+</html>

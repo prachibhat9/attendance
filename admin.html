@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <label for="adminId">ID</label>
+            <input type="text" id="adminId" name="adminId" required>
+    
+            <label for="password">Password</label>
+            <input type="password" id="adminPw" name="password" required>
+    
+            <button type="submit" id="submit">Submit</button>
+            <div class="links">
+                <a href="index.html">back</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const adminId = document.getElementById('adminId').value;
+                const adminPw = document.getElementById('adminPw').value;
+                if(adminId=="admin" && adminPw=="kloctechnologies1234")
+                window.location.href='loc.html';
+                else alert ('Incorrect ID or Password')
+            })
+
+    </script>
+</body>
+</html>
